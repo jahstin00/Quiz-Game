@@ -16,6 +16,13 @@ def save_leaderboard(leaderboard):
     with open(LEADERBOARD_FILE, "w") as f:
         json.dump(leaderboard, f, indent=4)
 
+# Display leaderboard
+def display_leaderboard(leaderboard):
+    print("\n🏆 Leaderboard 🏆")
+    sorted_leaderboard = sorted(leaderboard.items(), key=lambda x: x[1], reverse=True)
+    for player, scr in sorted_leaderboard:
+        print(f"{player}: {scr}")
+
 # Multiple choice questions
 questions = {
     "What is the largest planet in our solar system?": {
@@ -136,9 +143,7 @@ def play_quiz():
     leaderboard[name] = max(score, leaderboard.get(name, 0))
     save_leaderboard(leaderboard)
 
-    print("\n🏆 Leaderboard 🏆")
-    for player, scr in sorted(leaderboard.items(), key=lambda x: x[1], reverse=True):
-        print(f"{player}: {scr}")
+    display_leaderboard(leaderboard)  # <-- Step 3 function used here
 
 if __name__ == "__main__":
     play_quiz()
