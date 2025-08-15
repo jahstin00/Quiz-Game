@@ -115,7 +115,7 @@ def play_quiz():
     name = input("Enter your name: ")
     score = 0
 
-    print("\nType 'quit' anytime to stop the quiz early.\n")
+    print("\nType 'submit' anytime to stop the quiz early.\n")
 
     for q, data in questions.items():
         options = data["options"][:]
@@ -128,7 +128,7 @@ def play_quiz():
 
         ans = input("Your choice: ").strip().upper()
 
-        if ans.lower() == "quit":
+        if ans.lower() == "submit":
             break
 
         if ans in letters:
