@@ -16,10 +16,14 @@ def save_leaderboard(leaderboard):
     with open(LEADERBOARD_FILE, "w") as f:
         json.dump(leaderboard, f, indent=4)
 
+# Function to get the score (for sorting)
+def get_score(item):
+    return item[1]  # item[0] is name, item[1] is score
+
 # Display leaderboard
 def display_leaderboard(leaderboard):
     print("\n🏆 Leaderboard 🏆")
-    sorted_leaderboard = sorted(leaderboard.items(), key=lambda x: x[1], reverse=True)
+    sorted_leaderboard = sorted(leaderboard.items(), key=get_score, reverse=True)
     for player, scr in sorted_leaderboard:
         print(f"{player}: {scr}")
 
@@ -140,10 +144,12 @@ def play_quiz():
     print(f"\nYour score: {score}")
 
     leaderboard = load_leaderboard()
-    leaderboard[name] = max(score, leaderboard.get(name, 0))
+    leaderboard.setdefault(name, score)  # Add if not already there
+    if score > leaderboard[name]:        # Update only if higher
+        leaderboard[name] = score
     save_leaderboard(leaderboard)
 
-    display_leaderboard(leaderboard)  # <-- Step 3 function used here
+    display_leaderboard(leaderboard)
 
 if __name__ == "__main__":
     play_quiz()
